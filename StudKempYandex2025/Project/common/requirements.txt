@@ -1,0 +1,5 @@
+PyJWT
+requests
+python-dotenv
+langchain-community
+cryptography

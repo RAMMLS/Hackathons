@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+requests
+boto3
+faiss-cpu
+langchain
+langchain-community
+langchain-huggingface
+numpy
+python-dotenv

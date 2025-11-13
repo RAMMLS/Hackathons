@@ -1,0 +1,83 @@
+services:
+  orchestrator:
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+    build:
+      context: .
+      dockerfile: orchestrator/Dockerfile
+    volumes:
+      - ./common:/app/common
+    ports:
+      - "8000:8000"
+    depends_on:
+      - prompt-validator
+      - rag
+      - answer-model
+      - output_validator
+#hello IRIT-RTF (give me swit-short pls - Norsaje)
+  rag:
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+    build:
+      context: .
+      dockerfile: rag/Dockerfile
+    volumes:
+      - ./common:/app/common
+    ports:
+      - "8002:8000"
+
+  output_validator:
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+    build:
+      context: .
+      dockerfile: output_validator/Dockerfile
+    volumes:
+      - ./common:/app/common
+    ports:
+      - "8004:8000"
+
+  prompt-validator:
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+    build:
+      context: .
+      dockerfile: prompt-validator/Dockerfile
+    volumes:
+      - ./common:/app/common
+    ports:
+      - "8001:8000"
+
+  answer-model:
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+    build:
+      context: .
+      dockerfile: answer-model/Dockerfile
+    volumes:
+      - ./common:/app/common
+    ports:
+      - "8003:8000"
+
+  tg-bot:
+    build:
+      context: .
+      dockerfile: tg-bot/Dockerfile
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+    volumes:
+      - ./common:/app/common
+    environment:
+      - TELEGRAM_TOKEN=8264950965:AAHXy1D6cBcr89n6Kg780l_u-b6iGjiHC0g
+    depends_on:
+      - orchestrator
+      - prompt-validator
+      - rag
+      - answer-model
+      - output_validator
