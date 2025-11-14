@@ -1,5 +1,13 @@
 #Update requirements.txt - обновил файл
 
+#Update app.py 
+
+'''python
+*** для не читающих коммиты: в строчке app.run(debug=True) внес 
+***правки: app.run(host='0.0.0.0', port=5000, debug=True)
+'''
+
+
 # Собираем образ
 docker build -t osint-analyzer .
 
