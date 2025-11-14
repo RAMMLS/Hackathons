@@ -1,0 +1,10 @@
+{
+  "users": {
+    "test": {
+      "id": "f4f39fe0-726a-4272-b03c-a99975fdb95e",
+      "username": "test",
+      "hashed_password": "048104cae45fd6e711f1e666e83d2b979200e057986a3327fe82358c40fd28ea30b2bc658969aba4ca442d9aec5472a5",
+      "disabled": false
+    }
+  }
+}

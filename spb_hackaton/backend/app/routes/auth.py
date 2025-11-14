@@ -1,51 +1,45 @@
-from fastapi import APIRouter, HTTPException, Depends, status
-from sqlalchemy.ext.asyncio import AsyncSession
-from typing import Optional
-from jose import jwt
-from datetime import datetime, timedelta
+from fastapi import APIRouter, HTTPException, status, Depends, Form
+from datetime import timedelta
+from app.models.user import UserCreate, Token, UserResponse
+from app.services.user_service import UserService
+from app.auth.auth_handler import create_access_token
+from app.config import settings
 
-from database import get_db
-from models.users import User, UserRespones # , Token чтобы backend не забывал пользователя, а так же UserRrespones
-from service.auth_service import AuthService #Нужно сделать AuthService
-from schemas.users import UserBase, User
+router = APIRouter(prefix="/auth", tags=["authentication"])
 
-router = APIRouter()
-
-async def create_access_token(data: dict) -> str:
-        to_encode = await data.copy()
-        expire = await datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-        to_encode.update({"exp": expire})
-        return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
-
-@router.post("registration", status_code=status.HTTP_201_CREATED, response_model=UserRespones, tags=["Регистрация"])
-async def register(user_data: UserBase, db: AsyncSession = Depends(get_db)):
-    existing_user = await AuthService.get_user_by_username(db, user_data.username)
-    if existing_user:
+@router.post("/register", response_model=UserResponse)
+async def register(user_data: UserCreate):
+    """Register new user"""
+    try:
+        user = UserService.create_user(user_data)
+        return UserResponse(**user.dict())
+    except ValueError as e:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Пользователь существует"
+            detail=str(e)
         )
-    new_user = await AuthService.create_user(db, user_data)
-    return UserRespones(username=new_user.username)
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Internal server error"
+        )
 
-@router.post("/auth", tags=["Авторизация"])
-async def auth(user_data: UserBase, db: AsyncSession = Depends(get_db)):
-    existing_user = await AuthService.get_user_by_username(db, user_data.username)
-    
-    if not existing_user:
+@router.post("/login", response_model=Token)
+async def login(
+    username: str = Form(...),
+    password: str = Form(...)
+):
+    """Login user and get access token"""
+    user = UserService.authenticate_user(username, password)
+    if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Неверный логин"
-        )
-    if existing_user.password != user_data.password:
-        raise HTTPException(
-            status_code = status.HTTP_401_UNAUTHORIZED,
-            detaile = "Неверный логин или пароль"
+            detail="Incorrect username or password",
+            headers={"WWW-Authenticate": "Bearer"},
         )
     
-    access_token = create_access_token(data={"sub": existing_user.username})
-    return {
-        "access_token": access_token,
-        "token_type": "bearer",
-        "username": existing_user.username
-    }
+    access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token = create_access_token(
+        data={"sub": user.username}, expires_delta=access_token_expires
+    )
+    return {"access_token": access_token, "token_type": "bearer"}
