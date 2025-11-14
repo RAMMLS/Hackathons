@@ -1,0 +1,24 @@
+FROM python:3.10.8-slim-bullseye
+
+RUN apt-get update && apt-get install -y \
+    libgl1 \
+    libglib2.0-0 \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+COPY . .
+
+RUN pip install --no-cache-dir \
+    numpy==1.24.3 \
+    torch==2.0.1 \
+    torchvision==0.15.2 \
+    Pillow==9.5.0
+
+RUN mkdir -p data
+
+# Копируем ваш model.pth в контейнер (если он существует)
+# Если файла нет, сборка продолжит работать
+COPY model.pth ./
+
+CMD ["python", "train.py"]
