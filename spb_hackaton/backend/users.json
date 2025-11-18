@@ -14,13 +14,43 @@
       "profile": {
         "name": "Vlad",
         "age": 20,
-        "profession": "Frontend",
+        "profession": "Стив хуйсон",
         "interests": [
-          "Frontend"
+          "Стив хуйсон"
         ],
         "education": "School",
         "location": "Kazan",
         "bio": ""
+      }
+    },
+    "tom": {
+      "id": "401b7f52-6b43-4945-aea5-578bac354db7",
+      "username": "tom",
+      "hashed_password": "bd8ced25a59ef36d42844871ff0305a2e3c91ddc217fbf0d7b439d0e131abbd1dc4fb1daf71879035fa473629129e404",
+      "disabled": false,
+      "profile": {
+        "name": "Роберт",
+        "age": 20,
+        "profession": "прогер",
+        "interests": [
+          "все"
+        ],
+        "education": "высшее",
+        "location": "россия",
+        "bio": ""
+      }
+    },
+    "ilser": {
+      "profile": {
+        "name": "ilyar ibragimov",
+        "age": 19,
+        "profession": "ib specialist",
+        "interests": [
+          "handball"
+        ],
+        "education": "shcool",
+        "location": "russia",
+        "bio": "abcde"
       }
     }
   }

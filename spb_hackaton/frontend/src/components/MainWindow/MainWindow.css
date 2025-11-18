@@ -9,7 +9,7 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   /* background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #667eea 100%); */
   min-height: 100vh;
-  min-height: -webkit-fill-available;
+  /* min-height: -webkit-fill-available; */
   background-position: center;
   color: #ffffff;
   line-height: 1.6;
@@ -134,6 +134,7 @@ html {
   transition: all 0.3s ease;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   text-align: left;
+  margin-bottom: 10px;
 }
 
 .action-btn:hover {
@@ -200,7 +201,7 @@ html {
 }
 
 .info-card {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.3);
   border-radius: 12px;
   padding: 15px;
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -623,6 +624,15 @@ html {
   font-size: 1.1rem;
   transition: all 0.2s ease;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  /* Явное центрирование */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  /* Убедимся, что нет наследуемых отступов или выравниваний */
+  margin: 0;
+  line-height: 1;
 }
 
 .send-button:hover {
@@ -883,3 +893,27 @@ html {
 .message-text li {
   margin: 2px 0;
 }
+
+/* Общий стиль скроллбара для WebKit */
+::-webkit-scrollbar {
+  width: 4px;     /* Вертикальный скроллбар */
+  height: 8px;    /* Горизонтальный (если нужен) */
+}
+
+::-webkit-scrollbar-track {
+  background: transparent; /* Прозрачный трек */
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Скрываем скроллбар у body, если не нужен */
+/* body::-webkit-scrollbar { display: none; } */

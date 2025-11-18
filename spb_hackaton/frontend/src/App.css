@@ -4,6 +4,22 @@
   box-sizing: border-box;
 }
 
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: #f5f7fa; /* или любой светлый цвет, не чёрный! */
+}
+
+#root {
+  min-height: 100%;
+}
+
+.App{
+  height: 100vh;
+  width: 100%;
+}
+
 @keyframes gradientShift {
   0% {
     background-position: 0% 50%;

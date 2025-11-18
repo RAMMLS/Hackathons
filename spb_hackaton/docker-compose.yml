@@ -9,8 +9,8 @@ services:
     working_dir: /app
     environment:
       - DATABASE_URL=sqlite+aiosqlite:///./test.db
-      - MISTRAL_API_KEY=DUuPe2r79BAfDSX9OV6K7FgA1P3g6oeb
-      - MISTRAL_MODEL=mistral-small
+      - MISTRAL_API_KEY=hdEth5IdV4xffjQv4gMjRBi6HN0resY6
+      - MISTRAL_MODEL=mistral-small-latest
     restart: unless-stopped
     networks:
       - app-network

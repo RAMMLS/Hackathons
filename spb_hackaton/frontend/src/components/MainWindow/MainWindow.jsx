@@ -302,17 +302,6 @@ const MainWindow = ({ onLogout, onStartGame, userName: propUserName }) => {
             <div className="mascot-controls">
               <div className="mascot-selector">
                 <label className="mascot-select-label">Выберите маскота:</label>
-                <select 
-                  className="mascot-select"
-                  value={mascotIndex}
-                  onChange={(e) => handleMascotChange(Number(e.target.value))}
-                >
-                  {mascots.map((mascot, index) => (
-                    <option key={index} value={index}>
-                      {index + 1}. {mascot.name}
-                    </option>
-                  ))}
-                </select>
               </div>
               <div className="mascot-buttons">
                 {mascots.map((mascot, index) => (
